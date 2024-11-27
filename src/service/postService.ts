@@ -24,5 +24,6 @@ export async function findAllPosts() {
 export async function saveNewPost(post: PostRequest) {
     const db = (await connection).db(DATABASE_NAME);
     const collection = db.collection("posts");
-    await collection.insertOne(post);
+    const postCreated = await collection.insertOne(post);
+    return postCreated;
 }
