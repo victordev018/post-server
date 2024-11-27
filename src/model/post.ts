@@ -4,3 +4,5 @@ export default interface Post {
     imageUrl: string,
     alt: string
 }
+
+export type PostRequest = Omit<Post, "id">;
