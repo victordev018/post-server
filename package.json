@@ -29,6 +29,7 @@
     "start": "node build/server.js"
   },
   "dependencies": {
+    "": "file:",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongodb": "^6.11.0"
