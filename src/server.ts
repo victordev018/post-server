@@ -14,8 +14,8 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 app.use(express.static(pathUploads));    // allows serving static files from the 'uploaded' folder
-app.use(router);
 app.use(cors(corsOptions));
+app.use(router);
 
 // up server
 app.listen(PORT, () => {
