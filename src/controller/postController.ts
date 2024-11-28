@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import postService from "../service/postService";
 import fs  from "fs";
 import Post from "../model/postRequestDTO";
+import generateDescriptionWithGemini from "../service/geminiService";
 
 async function getAllPosts(req: Request, res: Response) {
     const response = await postService.findAllPosts()
@@ -28,7 +29,11 @@ async function uploadImage(req: Request, res: Response) {
 async function updatePost(req: Request, res: Response) {
     const id = req.params.id;
     const imageUrl = `http://localhost:3000/${id}.png`;
-    const {description, alt} = req.body;
+    const alt = req.body.alt;
+
+    // generate description with gemini AI
+    const imageBuffer = fs.readFileSync(`uploads/${id}.png`);
+    const description = await generateDescriptionWithGemini(imageBuffer);
 
     const post: Post = new Post(description, imageUrl, alt);
     const response = await postService.updatePost(id, post);
