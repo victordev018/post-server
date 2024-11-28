@@ -17,6 +17,7 @@ const upload = multer({dest: "./uploads", storage})
 router.get("/posts", postController.getAllPosts);
 router.post("/posts", postController.createNewPoster);
 router.post("/upload", upload.single("image"), postController.uploadImage);
+router.put("/upload/:id", postController.updatePost)
 
 
 export default router;
