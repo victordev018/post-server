@@ -1,5 +1,5 @@
 import connect from "../database/dbConnection";
-import Post, { PostRequest } from "../model/post";
+import Post from "../model/postRequestDTO";
 require('dotenv').config();     // configure dotenv to application load environment variables
 
 // get connection with mongodb in cloud
@@ -11,17 +11,12 @@ const DATABASE_NAME = String(process.env.DATABASE_NAME);
 export async function findAllPosts() {
     const db = (await connection).db(DATABASE_NAME);
     const collection = db.collection("posts");
-    const resultQuery = await collection.find().toArray();
-    
-    const listPost : Post[] = resultQuery.map((object) => {
-        const post: Post = object as unknown as Post;
-        return post;
-    });
+    const listPost = await collection.find().toArray();
 
     return listPost;
 }
 
-export async function saveNewPost(post: PostRequest) {
+export async function saveNewPost(post: Post) {
     const db = (await connection).db(DATABASE_NAME);
     const collection = db.collection("posts");
     const postCreated = await collection.insertOne(post);

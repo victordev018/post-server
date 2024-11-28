@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {findAllPosts, saveNewPost} from "../service/postService";
-import {PostRequest} from "../model/post";
 import fs  from "fs";
+import Post from "../model/postRequestDTO";
 
 async function getAllPosts(req: Request, res: Response) {
     const response = await findAllPosts()
@@ -9,13 +9,15 @@ async function getAllPosts(req: Request, res: Response) {
 }
 
 async function createNewPoster(req: Request, res: Response) {
-    const post: PostRequest = req.body;
-    await saveNewPost(post);
-    res.status(201).send();
+    const {description, imageUrl, alt} = req.body;
+    const post: Post = new Post(description, imageUrl, alt);
+    const response = await saveNewPost(post);
+    res.status(201).send(response);
 }
 
 async function uploadImage(req: Request, res: Response) {
-    const post: PostRequest = req.body;
+    const {description, imageUrl, alt} = req.body;
+    const post: Post = new Post(description, imageUrl, alt);
     const postCreatedResponse = await saveNewPost(post);
     const oldPath = String(req.file?.path);
     const newPath = `uploads/${postCreatedResponse.insertedId}.png`;
