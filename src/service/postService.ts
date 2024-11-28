@@ -1,7 +1,7 @@
+require('dotenv').config();     // configure dotenv to application load environment variables
 import { ObjectId } from "mongodb";
 import connect from "../database/dbConnection";
 import Post from "../model/postRequestDTO";
-require('dotenv').config();     // configure dotenv to application load environment variables
 
 // get connection with mongodb in cloud
 const STRING_CONNECTION = String(process.env.STRING_CONNECTION);
